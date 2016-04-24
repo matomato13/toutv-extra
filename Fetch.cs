@@ -38,7 +38,7 @@ namespace toutv
             var outputFileName = GetOutputFileName(metaData);
             if (File.Exists(outputFileName))
             {
-                Console.WriteLine("File \"{0}\" already exists. Skipping.");
+                Console.WriteLine("File \"{0}\" already exists. Skipping.", outputFileName);
                 return 0;
             }
 
@@ -72,7 +72,7 @@ namespace toutv
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "ffmpeg",
-                    Arguments = string.Format("-i \"{0}\" -c copy \"{1}\"", url, outputFileName)
+                    Arguments = string.Format("-i \"{0}\" -c copy -bsf:a aac_adtstoasc \"{1}\"", url, outputFileName)
                 }
             };
 
@@ -94,7 +94,7 @@ namespace toutv
         private static string GetOutputFileName(MediaMetaData metaData)
         {
             var outputfilename = string.Format("{0} {1}{2}", metaData.Title, metaData.Saison, metaData.Episode).Trim();
-            return outputfilename + ".ts";
+            return outputfilename + ".mp4";
         }
     }
 
